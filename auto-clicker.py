@@ -10,8 +10,8 @@ EXIT_KEY = KeyCode(char='~')    # 退出程式
 clicking_event = threading.Event()
 running = True
 mouse = Controller()
-xaxis = 1314 #設定點擊位置的X座標
-yaxis = 680 #設定點擊位置的Y座標
+xaxis = 0 #設定點擊位置的X座標
+yaxis = 0 #設定點擊位置的Y座標
 
 def clicker():
     while running:
