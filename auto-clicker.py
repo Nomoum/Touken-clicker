@@ -16,8 +16,7 @@ yaxis = 680 #設定點擊位置的Y座標
 def clicker():
     while running:
         if clicking_event.is_set():
-            print("Auto-clicker activated")
-            pyautogui.moveTo(xaxis, yaxis, duration=1) #
+            pyautogui.moveTo(xaxis, yaxis, duration=1)
             time.sleep(1)
             pyautogui.mouseDown(button='left')
             pyautogui.moveTo(xaxis, yaxis-50, duration=1)
