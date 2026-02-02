@@ -6,7 +6,6 @@ from pynput.mouse import Controller, Button
 from pynput.keyboard import Listener, Key
 import pyautogui
 
-# --- CONFIGURATION ---
 TOGGLE_KEY = Key.tab
 EXIT_KEY = Key.home
 
@@ -19,7 +18,6 @@ last_run_date = None
 pyautogui.FAILSAFE = False
 
 def log_terminal(message):
-    """Helper to print with a timestamp."""
     timestamp = datetime.now().strftime("%H:%M:%S")
     print(f"[{timestamp}] {message}")
 
@@ -152,8 +150,9 @@ def heal():
     pyautogui.moveTo(xaxis+ 10*rng, yaxis+ 10*rng, duration=1+rng)
 
 
-def special_four_am_function():
+def refresh_four_am_function():
     log_terminal(">>> 4 AM TRIGGER: Starting special task...")
+    
     rng = random.uniform(-0.5, 0.5)
     time.sleep(4000)
     pyautogui.moveTo(1448, 179, duration=1)
@@ -206,26 +205,19 @@ def clicker():
         now = datetime.now()
         current_date = now.date()
         if clicking_event.is_set():
-            # --- 4 AM TRIGGER LOGIC ---
             if now.hour == 3 and last_run_date != current_date:
                 # Stop clicking while the special function runs
                 was_clicking = clicking_event.is_set()
                 if was_clicking:
-                    clicking_event.clear()
-                
-                special_four_am_function()
+                    clicking_event.clear()        
+                refresh_four_am_function()
                 last_run_date = current_date
-                log_terminal(f"Daily task marked done for {current_date}")
-                
-                # Resume clicking if it was active before
+                log_terminal(f"Daily task marked done for {current_date}")              
                 if was_clicking:
                     clicking_event.set()
             else:
-            # Original click logic
                 osaka()
-
         else:
-            # Short sleep when paused to prevent high CPU usag
             time.sleep(0.5)
 
 
@@ -244,7 +236,6 @@ def on_press(key):
         return False
 
 
-# Start Threading
 click_thread = threading.Thread(target=clicker, daemon=True)
 click_thread.start()
 
